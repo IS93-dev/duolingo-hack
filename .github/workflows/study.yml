@@ -1,25 +1,25 @@
 name: Do a Duolingo lesson
 
 on:
-  workflow_dispatch:
-    inputs:
-      lessons:
-        default: 1
-        description: 'Number of lessons to be completed'
-        required: false
-        type: number
+  schedule:
+    - cron: '0 0-23 ? * *'  # Runs several times daily at random hours (0-23)
 
 jobs:
   study:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5  # Upgrade to version 5 for outputs support
 
       - uses: actions/setup-node@v4
         with:
           node-version: 20
 
+      - id: generate_lessons
+        run: |  # Multi-line script with temporary variable
+          lesson_count=$((RANDOM % 11)) + 10
+          echo "##@variables:lessons=$lesson_count"
+
       - run: node index.js
         env:
           DUOLINGO_JWT: ${{ secrets.DUOLINGO_JWT }}
-          LESSONS: ${{ inputs.lessons }}
+          LESSONS: ${{ steps.generate_lessons.env.lessons }}
