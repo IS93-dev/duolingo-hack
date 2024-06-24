@@ -1,8 +1,7 @@
 name: Do a Duolingo lesson
 
 on:
-  schedule:
-    - cron: '0 0-23 ? * *'  # Runs several times daily at random hours (0-23)
+  workflow_dispatch:  # Allows manual triggering of the workflow
 
 jobs:
   study:
