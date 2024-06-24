@@ -1,8 +1,7 @@
 name: Do a Duolingo lesson
 
 on:
-  schedule:
-    - cron: '0 0-23 ? * *'  # Runs several times daily at random hours (0-23)
+  workflow_dispatch:  # Allows manual triggering of the workflow
 
 jobs:
   study:
@@ -16,8 +15,9 @@ jobs:
 
       - id: generate_lessons
         run: |  # Multi-line script with temporary variable
-          lesson_count=$(( (RANDOM % 11) + 10 ))
+          lesson_count=$(( (RANDOM % 13) + 3 ))
           echo "lessons=$lesson_count" >> $GITHUB_ENV
+          echo "Generated lesson count: $lesson_count"
 
       - run: node index.js
         env:
