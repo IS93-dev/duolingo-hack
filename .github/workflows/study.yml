@@ -8,7 +8,7 @@ jobs:
   study:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5  # Upgrade to version 5 for outputs support
+      - uses: actions/checkout@v4  # Upgrade to version 5 for outputs support
 
       - uses: actions/setup-node@v4
         with:
