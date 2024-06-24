@@ -16,10 +16,10 @@ jobs:
 
       - id: generate_lessons
         run: |  # Multi-line script with temporary variable
-          lesson_count=$((RANDOM % 11)) + 10
-          echo "##@variables:lessons=$lesson_count"
+          lesson_count=$(( (RANDOM % 11) + 10 ))
+          echo "lessons=$lesson_count" >> $GITHUB_ENV
 
       - run: node index.js
         env:
           DUOLINGO_JWT: ${{ secrets.DUOLINGO_JWT }}
-          LESSONS: ${{ steps.generate_lessons.env.lessons }}
+          LESSONS: ${{ env.lessons }}
